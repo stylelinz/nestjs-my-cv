@@ -16,3 +16,9 @@ Content-Type: application/json
   "email": "test+123@example.com",
   "password" :"12345678"
 }
+
+### current signed in user
+GET http://localhost:3000/auth/current
+
+### sign out
+POST http://localhost:3000/auth/signout
