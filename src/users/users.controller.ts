@@ -30,6 +30,11 @@ export class UsersController {
     return this.authService.signup(body.email, body.password);
   }
 
+  @Post('/signin')
+  signin(@Body() body: CreateUserDto) {
+    return this.authService.signin(body.email, body.password);
+  }
+
   // Although put the controller-wide serialization there,
   // you can still place other serializer for specific case
   @Serializer(UserDto)
