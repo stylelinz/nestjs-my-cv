@@ -18,7 +18,7 @@ Content-Type: application/json
 }
 
 ### current signed in user
-GET http://localhost:3000/auth/current
+GET http://localhost:3000/auth/whoami
 
 ### sign out
 POST http://localhost:3000/auth/signout
