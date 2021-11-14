@@ -10,6 +10,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { Serializer } from '../interceptors/serialize.interceptor';
+import { AuthService } from './auth.service';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { UserDto } from './dtos/user.dto';
@@ -19,11 +20,14 @@ import { UsersService } from './users.service';
 // Put the Serializer here for controller-wide serialization
 @Serializer(UserDto)
 export class UsersController {
-  constructor(private usersService: UsersService) {}
+  constructor(
+    private usersService: UsersService,
+    private authService: AuthService,
+  ) {}
 
   @Post('/signup')
   createUser(@Body() body: CreateUserDto) {
-    this.usersService.create(body.email, body.password);
+    return this.authService.signup(body.email, body.password);
   }
 
   // Although put the controller-wide serialization there,
