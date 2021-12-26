@@ -14,7 +14,7 @@ const cookieSession = require('cookie-session');
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: `.${process.env.NODE_ENV}.env`,
+      envFilePath: `.env/.${process.env.NODE_ENV}.env`,
     }),
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
