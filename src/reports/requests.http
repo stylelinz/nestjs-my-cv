@@ -3,13 +3,13 @@ POST  http://localhost:3000/reports
 Content-Type: application/json
 
 {
-  "make":"toyota",
-  "model":"altis",
-  "year": 2002,
-  "mileage":20,
-  "lng":0,
-  "lat":0,
-  "price":599
+  "make":"mazda",
+  "model":"gt",
+  "year": 1999,
+  "mileage":4999,
+  "lng":100,
+  "lat":290,
+  "price":12399
 }
 
 ### Approve/Unapprove an existing report
@@ -22,4 +22,4 @@ Content-Type: application/json
 
 ### Get an estimate
 
-GET  http://localhost:3000/reports?make=toyota&model=altis&lng=0&lat=0&mileage=20&year=2002
+GET  http://localhost:3000/reports?make=ford&model=gt&lng=90&lat=90&mileage=20&year=2002
