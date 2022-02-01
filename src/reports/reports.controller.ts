@@ -8,6 +8,7 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { AdminGuard } from '../guards/admin.guard';
 import { AuthGuard } from '../guards/auth.guard';
 import { Serializer } from '../interceptors/serialize.interceptor';
@@ -20,6 +21,7 @@ import { ReportDto } from './dtos/report.dto';
 import { ReportsService } from './reports.service';
 
 @Controller('reports')
+@ApiTags('reports')
 export class ReportsController {
   constructor(private readonly reportsService: ReportsService) {}
 

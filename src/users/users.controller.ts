@@ -11,6 +11,7 @@ import {
   Session,
   UseGuards,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '../guards/auth.guard';
 import { Serializer } from '../interceptors/serialize.interceptor';
 import { AuthService } from './auth.service';
@@ -24,6 +25,7 @@ import { UsersService } from './users.service';
 @Controller('auth')
 // Put the Serializer here for controller-wide serialization
 @Serializer(UserDto)
+@ApiTags('users')
 export class UsersController {
   constructor(
     private usersService: UsersService,
