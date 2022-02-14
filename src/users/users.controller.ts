@@ -12,6 +12,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { PinoLogger, InjectPinoLogger } from 'nestjs-pino';
 import { AuthGuard } from '../guards/auth.guard';
 import { Serializer } from '../interceptors/serialize.interceptor';
 import { AuthService } from './auth.service';
@@ -30,6 +31,7 @@ export class UsersController {
   constructor(
     private usersService: UsersService,
     private authService: AuthService,
+    @InjectPinoLogger(UsersController.name) private readonly logger: PinoLogger,
   ) {}
 
   @Get('/current')

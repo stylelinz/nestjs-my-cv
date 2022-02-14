@@ -2,6 +2,7 @@ import { MiddlewareConsumer, Module, ValidationPipe } from '@nestjs/common';
 import { APP_PIPE } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { LoggerModule } from 'nestjs-pino';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { ReportsModule } from './reports/reports.module';
@@ -14,10 +15,20 @@ const cookieSession = require('cookie-session');
       envFilePath: `.env/.${process.env.NODE_ENV}.env`,
     }),
     TypeOrmModule.forRoot(),
+    LoggerModule.forRoot({
+      pinoHttp: {
+        level: process.env.NODE_ENV !== 'production' ? 'debug' : 'info',
+        // install 'pino-pretty' package in order to use the following option
+        transport:
+          process.env.NODE_ENV !== 'production'
+            ? { target: 'pino-pretty' }
+            : undefined,
+        // wrapSerializers: true,
+      },
+    }),
     UsersModule,
     ReportsModule,
   ],
-  // controllers: [AppController],
   providers: [
     AppService,
     {
@@ -26,6 +37,7 @@ const cookieSession = require('cookie-session');
         whitelist: true,
       }),
     },
+    // LoggerService,
   ],
 })
 export class AppModule {

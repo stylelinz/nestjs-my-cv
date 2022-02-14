@@ -2,10 +2,14 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
+import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectRepository(User) private userRepo: Repository<User>) {}
+  constructor(
+    @InjectRepository(User) private userRepo: Repository<User>,
+    @InjectPinoLogger(UsersService.name) private readonly logger: PinoLogger,
+  ) {}
 
   create(email: string, password: string) {
     const user = this.userRepo.create({ email, password });
@@ -14,6 +18,7 @@ export class UsersService {
   }
 
   findOne(id: number) {
+    this.logger.info('Find one user with id %i', id);
     if (!id) return null;
     return this.userRepo.findOne(id);
   }

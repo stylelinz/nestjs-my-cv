@@ -1,11 +1,12 @@
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { Logger } from 'nestjs-pino';
 import { AppModule } from './app.module';
 
 const APP_PORT = process.env.PORT || 3000;
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { bufferLogs: true });
 
   const config = new DocumentBuilder()
     .addCookieAuth()
@@ -16,6 +17,9 @@ async function bootstrap() {
   const apiDocument = SwaggerModule.createDocument(app, config);
 
   SwaggerModule.setup('doc', app, apiDocument);
+
+  app.useLogger(app.get(Logger));
+  app.flushLogs();
 
   await app.listen(APP_PORT).catch(console.error);
 

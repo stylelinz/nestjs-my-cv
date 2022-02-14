@@ -6,14 +6,20 @@ import {
 import { UsersService } from './users.service';
 import { randomBytes, scrypt as _scrypt } from 'crypto';
 import { promisify } from 'util';
+import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 
 const scrypt = promisify(_scrypt);
 
 @Injectable()
 export class AuthService {
-  constructor(private usersService: UsersService) {}
+  constructor(
+    private usersService: UsersService,
+    @InjectPinoLogger(AuthService.name) private readonly logger: PinoLogger,
+  ) {}
 
   async signup(email: string, password: string) {
+    this.logger.info('Finding user with email %s', email);
+
     // see if email is in use
     const users = await this.usersService.find(email);
 
