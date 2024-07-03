@@ -36,8 +36,8 @@ export class ReportsService {
     return this.repo.save(report);
   }
 
-  async changeApproval(id: string, { approved }: ApproveReportDto) {
-    const report = await this.repo.findOneOrFail(id).catch(() => {
+  async changeApproval(id: number, { approved }: ApproveReportDto) {
+    const report = await this.repo.findOneByOrFail({ id }).catch(() => {
       throw new NotFoundException('report not found');
     });
 

@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
   Query,
@@ -39,7 +40,10 @@ export class ReportsController {
 
   @Patch('/:id')
   @UseGuards(AdminGuard)
-  approveReport(@Param('id') id: string, @Body() body: ApproveReportDto) {
+  approveReport(
+    @Param('id', new ParseIntPipe()) id: number,
+    @Body() body: ApproveReportDto,
+  ) {
     return this.reportsService.changeApproval(id, body);
   }
 }

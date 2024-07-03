@@ -7,6 +7,7 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { ReportsModule } from './reports/reports.module';
 const cookieSession = require('cookie-session');
+import dataSource from '../data-source';
 
 @Module({
   imports: [
@@ -14,7 +15,7 @@ const cookieSession = require('cookie-session');
       isGlobal: true,
       envFilePath: `.env/.${process.env.NODE_ENV}.env`,
     }),
-    TypeOrmModule.forRoot(),
+    TypeOrmModule.forRoot({ ...dataSource.options }),
     LoggerModule.forRoot({
       pinoHttp: {
         level: process.env.NODE_ENV !== 'production' ? 'debug' : 'info',

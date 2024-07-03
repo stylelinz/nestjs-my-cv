@@ -20,11 +20,11 @@ export class UsersService {
   findOne(id: number) {
     this.logger.info('Find one user with id %i', id);
     if (!id) return null;
-    return this.userRepo.findOne(id);
+    return this.userRepo.findOneBy({ id });
   }
 
   find(email: string) {
-    return this.userRepo.find({ email });
+    return this.userRepo.findBy({ email });
   }
 
   async update(id: number, attrs: Partial<User>) {
